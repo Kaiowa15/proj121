@@ -11,10 +11,10 @@ camera.set(3 , 640)
 camera.set(4 , 480)
 
 # carregando a imagem da montanha
-mountain = cv2.imread('mount everest.jpg')
+mountain = cv2.imread('montanha.jpeg')
 
 # redimensionando a imagem da montanha como 640 X 480
-mountain = cv2.resize(mountain, 640, 640)
+mountain = cv2.resize(mountain , (640 , 480))
 
 while True:
 
@@ -31,15 +31,15 @@ while True:
         frame_rgb = cv2.cvtColor(frame , cv2.COLOR_BGR2RGB)
 
         # criando os limites
-        lower_bound = np.array([])
-        upper_bound = np.array([])
+        lower_bound = np.array([100,100,100])
+        upper_bound = np.array([255,255,255])
 
         # imagem dentro do limite
         mask_2 = cv2.inRange(frame_rgb, lower_bound, upper_bound)
         # invertendo a máscara
         mask = cv2.bitwise_not(mask_2)
         # bitwise_and - operação para extrair o primeiro plano / pessoa
-        person = cv2.bitwise(frame, frame, mask = mask_2)
+        person = cv2.bitwise_and(frame, frame, mask = mask)
         # imagem final
         final_image = np.where(person == 0, mountain, person)
         # exiba-a
